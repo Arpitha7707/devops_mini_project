@@ -1,0 +1,36 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install Dependencies
+      run: |
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Run Tests
+      run: |
+        echo "Running tests (if any)"
+        # Add actual test commands if applicable
+
+    - name: Build Docker Image
+      run: docker build -t flask-app .
+
+    # Optional: Deploy step (only if needed)
+    # - name: Deploy
+    #   run: |
+    #     echo "Add deployment commands here"
